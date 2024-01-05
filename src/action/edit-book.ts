@@ -1,6 +1,11 @@
 import { Book } from "@/types/buku";
 export default async function editBook(id: number, data: Book) {
   try {
+    const formData= new FormData();
+    formData.append('title',data.title);
+    formData.append('description',data.description ??'');
+    formData.append('price',data.price.toString())
+    formData.append('author', data.author);
     const res = await fetch(
       `https://testcasefe2023.ignorelist.com/api/v1/data/${id}`,
       {
@@ -8,7 +13,7 @@ export default async function editBook(id: number, data: Book) {
         headers: {
           nim: "1234",
         },
-        body: JSON.stringify(data),
+        body: formData,
       }
     );
     const json = await res.json();
